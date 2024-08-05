@@ -75,6 +75,7 @@ export class ProfileController {
       message: 'Success',
       profileId: profile.id,
       role: profile.role,
+      status: profile.status,
       jwt: jwt,
     };
   }
@@ -127,29 +128,29 @@ export class ProfileController {
   }
   
   
-  //Posting CV
-  @Post('upload')
-  @UseGuards(AuthGuard)
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file, @Body() createProfileDto: CreateProfileDto) {
-    if (!file) {
-      throw new BadRequestException('No file uploaded');
-    }
+  // //Posting CV
+  // @Post('upload')
+  // @UseGuards(AuthGuard)
+  // @UseInterceptors(FileInterceptor('file'))
+  // async uploadFile(@UploadedFile() file, @Body() createProfileDto: CreateProfileDto) {
+  //   if (!file) {
+  //     throw new BadRequestException('No file uploaded');
+  //   }
 
-    try {
-      // Save the file to the wanted directory
-      const filePath = './uploads/' + file.originalname;
-      createWriteStream(filePath, file.buffer);
+  //   try {
+  //     // Save the file to the wanted directory
+  //     const filePath = './uploads/' + file.originalname;
+  //     createWriteStream(filePath, file.buffer);
 
-      const profileData = { ...createProfileDto, cv: file.originalname };
-      const profile = await this.profileService.create(profileData);
+  //     const profileData = { ...createProfileDto, cv: file.originalname };
+  //     const profile = await this.profileService.create(profileData);
 
-      return profile;
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      throw new BadRequestException('Failed to upload file');
-    }
-  }
+  //     return profile;
+  //   } catch (error) {
+  //     console.error('Error uploading file:', error);
+  //     throw new BadRequestException('Failed to upload file');
+  //   }
+  // }
 
   @Post('create')
   @UseGuards(AuthGuard)
@@ -185,7 +186,6 @@ export class ProfileController {
     return this.profileService.change(email, updateProfileDto);
   }
 
-  
 
   @Patch(':id')
   @UseGuards(AuthGuard)
@@ -209,35 +209,10 @@ export class ProfileController {
       profileData = { ...updateProfileDto, cv: file.originalname };
     }
   
-    // Check if all specified fields are not empty
-    // if (
-    //   profileData && 
-    //   profileData.fullname &&
-    //   profileData.age &&
-    //   profileData.sex &&
-    //   profileData.degree &&
-    //   profileData.university &&
-    //   profileData.experience &&
-    //   profileData.userPhone &&
-    //   profileData.cv
-    // ) {
-    //   profileData.userdataCompleted = true;
-    // }   
-    //  if (
-    //   profileData && 
-    //   profileData.companyname &&
-    //   profileData.companydescription &&
-    //   profileData.contactemail &&
-    //   profileData.companyPhone 
-    // ) {
-    //   profileData.hrdataCompleted = true;
-    // }
-  
+
     return this.profileService.update(id, profileData);
   }
   
-  
-
   @Delete(':id')
   @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {

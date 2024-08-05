@@ -5,4 +5,5 @@ export class CreateProfileDto {
     role: string;
     location: string;
     phoneNo: string;
+    status: string;
 }

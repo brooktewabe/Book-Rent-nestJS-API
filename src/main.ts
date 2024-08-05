@@ -9,10 +9,10 @@ import { join } from 'path';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-  .setTitle('Jobs API')
-  .setDescription('The job API description')
+  .setTitle('Books API')
+  .setDescription('The book API description')
   .setVersion('1.0')
-  .addTag('Jobs')
+  .addTag('Books')
   .build();
 const document = SwaggerModule.createDocument(app, config);
 

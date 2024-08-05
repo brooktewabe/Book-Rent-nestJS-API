@@ -22,6 +22,9 @@ export class Profile {
     @Column({ type: 'text', nullable: false})
     role: string;
 
-    @Column({ type: 'text', nullable: true})
+    @Column({ type: 'text', nullable: false})
     cv: string;
+
+    @Column({ type: 'text', nullable: false})
+    status: string;
 }

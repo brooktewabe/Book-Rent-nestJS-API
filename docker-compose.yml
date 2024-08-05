@@ -9,7 +9,7 @@ services:
     ports:
       - '5432:5432'
     networks:
-      - job-app
+      - book-app
 
   app:
     build:
@@ -23,7 +23,7 @@ services:
     volumes:
       - ./src:/app/src
     networks:
-      - job-app
+      - book-app
 
   pgadmin:
     image: dpage/pgadmin4
@@ -36,9 +36,9 @@ services:
     depends_on:
       - db
     networks:
-      - job-app
+      - book-app
 
 networks:
-  job-app:
-    name: job-app
+  book-app:
+    name: book-app
     external: true
