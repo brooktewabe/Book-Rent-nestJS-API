@@ -12,11 +12,11 @@ import {
   Req, 
   Res, 
   UnauthorizedException, 
-  UploadedFile, 
+  // UploadedFile, 
   UseGuards, 
-  UseInterceptors 
+  // UseInterceptors 
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+// import { FileInterceptor } from '@nestjs/platform-express';
 import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -24,9 +24,9 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Response as ExpressResponse } from 'express';
 import { Request as ExpressRequest } from 'express';
-import { createReadStream, createWriteStream } from 'fs';
+import { createReadStream } from 'fs';
 import { join } from 'path';
-import * as multer from 'multer';
+// import * as multer from 'multer';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('profile')
@@ -187,31 +187,31 @@ export class ProfileController {
   }
 
 
-  @Patch(':id')
-  @UseGuards(AuthGuard)
-  @UseInterceptors(FileInterceptor('file'))
-  async update(
-    @Param('id') id: string,
-    @Body() updateProfileDto: UpdateProfileDto,
-    @UploadedFile() file: multer.File,
-  ) {
-    if (updateProfileDto.password) {
-      updateProfileDto.password = await bcrypt.hash(updateProfileDto.password, 12);
-    }
+  // @Patch(':id')
+  // @UseGuards(AuthGuard)
+  // @UseInterceptors(FileInterceptor('file'))
+  // async update(
+  //   @Param('id') id: string,
+  //   @Body() updateProfileDto: UpdateProfileDto,
+  //   @UploadedFile() file: multer.File,
+  // ) {
+  //   if (updateProfileDto.password) {
+  //     updateProfileDto.password = await bcrypt.hash(updateProfileDto.password, 12);
+  //   }
   
-    let profileData = { ...updateProfileDto };
-    if (file) {
-      // Save the file to the wanted directory
-      const filePath = './uploads/' + file.originalname;
-      createWriteStream(filePath, { flags: 'w' }).write(file.buffer);
+  //   let profileData = { ...updateProfileDto };
+  //   if (file) {
+  //     // Save the file to the wanted directory
+  //     const filePath = './uploads/' + file.originalname;
+  //     createWriteStream(filePath, { flags: 'w' }).write(file.buffer);
   
-      // Update the createProfileDto object with the file name
-      profileData = { ...updateProfileDto, cv: file.originalname };
-    }
+  //     // Update the createProfileDto object with the file name
+  //     profileData = { ...updateProfileDto, cv: file.originalname };
+  //   }
   
 
-    return this.profileService.update(id, profileData);
-  }
+  //   return this.profileService.update(id, profileData);
+  // }
   
   @Delete(':id')
   @UseGuards(AuthGuard)

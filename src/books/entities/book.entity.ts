@@ -1,7 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import {v4 as uuidv4} from 'uuid';
-
-
 @Entity({ name: 'books' })
 export class Book {
   @PrimaryGeneratedColumn('uuid')
@@ -11,7 +9,7 @@ export class Book {
   category: string;
 
   @Column({ type: 'text' })
-  book_name: string;
+  bookName: string;
 
   @Column({ type: 'text' })
   author: string;

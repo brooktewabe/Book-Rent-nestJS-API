@@ -23,8 +23,8 @@ export class Profile {
     role: string;
 
     @Column({ type: 'text', nullable: false})
-    cv: string;
-
-    @Column({ type: 'text', nullable: false})
     status: string;
+
+    @Column({ type: 'text', default:0})
+    rentIncome: string;
 }

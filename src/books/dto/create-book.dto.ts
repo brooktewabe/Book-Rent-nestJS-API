@@ -1,6 +1,6 @@
 export class CreateBookDto {
     category: string;
-    book_name: string;
+    bookName: string;
     author: string;
     NoOfCopies: number;
     status: string;
