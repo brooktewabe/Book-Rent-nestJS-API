@@ -27,6 +27,11 @@ export class BooksService {
       where: { id }
     });
   }
+  async findByCategory(category: string){
+    return await this.booksRepository.count({
+      where: {category}
+    });
+  }
 
   async update(id: string, updateBookDto: UpdateBookDto) {
     const book = await this.findOne(id);

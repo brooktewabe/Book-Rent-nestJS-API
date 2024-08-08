@@ -26,35 +26,35 @@ export class BooksController {
 
   @Post('create')
   @UseGuards(AuthGuard)
-  @UseInterceptors(FilesInterceptor('files')) // Use FilesInterceptor to handle multiple files
+  @UseInterceptors(FilesInterceptor('files')) 
   async create(
     @Body() createBookDto: CreateBookDto,
     @UploadedFiles() files: multer.File[], // Capture multiple files
   ) {
-    // Prepare book data
+
     let bookData = { ...createBookDto };
-  
-    // Ensure that two files are provided: book and cover
+
     if (files && files.length === 2) {
       const [bookFile, coverFile] = files;
-  
       // Save the book file to the desired directory
       const bookPath = './uploads/' + bookFile.originalname;
       createWriteStream(bookPath, { flags: 'w' }).write(bookFile.buffer);
-
       const coverPath = './uploads/' + coverFile.originalname;
       createWriteStream(coverPath, { flags: 'w' }).write(coverFile.buffer);
   
       // Update the book data with the file names
       bookData = { ...bookData, book: bookFile.originalname, cover: coverFile.originalname };
-    } else {
-      throw new BadRequestException('Two files book and cover image.');
+    } 
+    else {
+      throw new BadRequestException('Two files book and cover image are req.');
     }
-  
-    // Create the book
+
     const bookInfo = await this.booksService.create(bookData);
-  
     return bookInfo;
+  }
+  @Get('category/:category')
+  findByCategory(@Param('category') category: string){
+  return this.booksService.findByCategory(category);
   }
   
   @Get()

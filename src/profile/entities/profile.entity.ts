@@ -22,7 +22,7 @@ export class Profile {
     @Column({ type: 'text', nullable: false})
     role: string;
 
-    @Column({ type: 'text', nullable: false})
+    @Column({ type: 'text', default: 'Active'})
     status: string;
 
     @Column({ type: 'text', default:0})

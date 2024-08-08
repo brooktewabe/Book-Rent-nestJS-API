@@ -5,6 +5,9 @@ export class Book {
   @PrimaryGeneratedColumn('uuid')
   id: uuidv4;
 
+  @PrimaryGeneratedColumn()
+  bookId: number;
+
   @Column({ type: 'text' })
   category: string;
 
@@ -17,7 +20,7 @@ export class Book {
   @Column({ type: 'text' })
   NoOfCopies: number;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', default:'Active' })
   status: string;
   
   @Column({ type: 'text' })

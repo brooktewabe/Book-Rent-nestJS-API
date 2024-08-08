@@ -1,4 +1,5 @@
 export class CreateBookDto {
+    bookId: number;
     category: string;
     bookName: string;
     author: string;
