@@ -4,7 +4,7 @@ To create admin account
 POST - localhost:5000/profile/signup
 
 {
-    "email":"admin3@example.com",\n
+    "email":"admin3@example.com",<br/>
     "password":"password",
     "location": "Addis Ababa",
     "phoneNo":"0919191919",
