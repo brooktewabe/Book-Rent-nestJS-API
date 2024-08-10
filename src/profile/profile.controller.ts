@@ -97,6 +97,7 @@ export class ProfileController {
       throw new UnauthorizedException();
     }
   }
+  
   @Patch('email/:email')
   async change(
     @Param('email') email: string,
@@ -116,7 +117,7 @@ export class ProfileController {
     return { message: 'Logout successful' };
   }
   
-  
+  @Get('all')
   @UseGuards(AuthGuard)
   findAll() {
     return this.profileService.findAll();
