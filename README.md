@@ -1,26 +1,26 @@
-## Frontend - https://github.com/brooktewabe/Book-Rent-React
+## Frontend - https://github.com/brooktewabe/Book-Rent-React<br/>
 
-To create admin account
-POST - localhost:5000/profile/signup
+To create admin account<br/>
+POST - localhost:5000/profile/signup<br/>
 
-{
+{<br/>
     "email":"admin3@example.com",<br/>
-    "password":"password",
-    "location": "Addis Ababa",
-    "phoneNo":"0919191919",
-    "role":"admin"
-}
+    "password":"password",<br/>
+    "location": "Addis Ababa",<br/>
+    "phoneNo":"0919191919",<br/>
+    "role":"admin"<br/>
+}<br/>
 
-Demo accounts already created in the DB
+Demo accounts already created in the DB<br/>
 
-email: owner1@example.com        password: password
-email: owner2@example.com        password: password
-email: admin1@example.com        password: password
+email: owner1@example.com        password: password<br/>
+email: owner2@example.com        password: password<br/>
+email: admin1@example.com        password: password<br/>
 
 
-To import database:
+To import database:<br/>
 
-psql -h localhost -d bookdb -U postgres -f bookdb.sql
+psql -h localhost -d bookdb -U postgres -f bookdb.sql<br/>
 
 ## Installation
 
