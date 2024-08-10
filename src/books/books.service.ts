@@ -35,13 +35,25 @@ export class BooksService {
 
   async update(id: string, updateBookDto: UpdateBookDto) {
     const book = await this.findOne(id);
-    if(!book){
-      throw new NotFoundException()
+    if (!book) {
+      throw new NotFoundException(`Book with ID ${id} not found`);
     }
-    Object.assign(book, updateBookDto)
-
-    return await this.booksRepository.save(book)
+    
+    // console.log('Original Book:', book);
+    // console.log('Update Data:', updateBookDto);
+  
+    for (const key in updateBookDto) {
+      if (updateBookDto.hasOwnProperty(key)) {
+        book[key] = updateBookDto[key];
+      }
+    }
+  
+    // console.log('Updated Book:', book);
+  
+    return await this.booksRepository.save(book);
   }
+  
+  
 
   async remove(id: string) {
     const book = await this.findOne(id);
