@@ -12,11 +12,8 @@ import {
   Req, 
   Res, 
   UnauthorizedException, 
-  // UploadedFile, 
   UseGuards, 
-  // UseInterceptors 
 } from '@nestjs/common';
-// import { FileInterceptor } from '@nestjs/platform-express';
 import { ProfileService } from './profile.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -24,9 +21,6 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Response as ExpressResponse } from 'express';
 import { Request as ExpressRequest } from 'express';
-import { createReadStream } from 'fs';
-import { join } from 'path';
-// import * as multer from 'multer';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('profile')
@@ -66,7 +60,6 @@ export class ProfileController {
       throw new BadRequestException('Invalid credentials');
     }
 
-
     const jwt = await this.jwtService.signAsync({ id: profile.id });
 
     response.cookie('jwt', jwt, { httpOnly: true });
@@ -79,21 +72,7 @@ export class ProfileController {
       jwt: jwt,
     };
   }
-
-
-    //Return cv
-  @Get('pdf/:filename')
-  @UseGuards(AuthGuard)
-  getPdf(@Param('filename') filename: string, @Res() response: ExpressResponse) {
-    const filePath = join(__dirname, `../uploads/${filename}`);
   
-    response.setHeader('Content-Type', 'application/pdf');
-    response.setHeader('Content-Disposition', `inline; filename=${filename}`);
-  
-    createReadStream(filePath).pipe(response);
-  }
-  
-
   @Get('profile')
   @UseGuards(AuthGuard)
   async profile(@Req() request: ExpressRequest) {
@@ -118,63 +97,6 @@ export class ProfileController {
       throw new UnauthorizedException();
     }
   }
-  
-  @Post('logout')
-  @HttpCode(200) // Ensure the response code is 200 OK
-  async logout(@Res({ passthrough: true }) response: ExpressResponse) {
-    response.clearCookie('jwt');
-    response.setHeader('Cache-Control', 'no-store');
-    return { message: 'Logout successful' };
-  }
-  
-  
-  // //Posting CV
-  // @Post('upload')
-  // @UseGuards(AuthGuard)
-  // @UseInterceptors(FileInterceptor('file'))
-  // async uploadFile(@UploadedFile() file, @Body() createProfileDto: CreateProfileDto) {
-  //   if (!file) {
-  //     throw new BadRequestException('No file uploaded');
-  //   }
-
-  //   try {
-  //     // Save the file to the wanted directory
-  //     const filePath = './uploads/' + file.originalname;
-  //     createWriteStream(filePath, file.buffer);
-
-  //     const profileData = { ...createProfileDto, cv: file.originalname };
-  //     const profile = await this.profileService.create(profileData);
-
-  //     return profile;
-  //   } catch (error) {
-  //     console.error('Error uploading file:', error);
-  //     throw new BadRequestException('Failed to upload file');
-  //   }
-  // }
-
-  @Post('create')
-  @UseGuards(AuthGuard)
-  async createProfile(@Body() createProfileDto: CreateProfileDto) {
-    const { password, ...rest } = createProfileDto;
-    const hashedPassword = await bcrypt.hash(password, 12);
-    const profile = await this.profileService.create({ ...rest, password: hashedPassword });
-
-    return profile;
-  }
-
-  @Get('all')
-  @UseGuards(AuthGuard)
-  findAll() {
-    return this.profileService.findAll();
-  }
-
-  @Get(':id')
-  @UseGuards(AuthGuard)
-  findOne(@Param('id') id: string) {
-    return this.profileService.findOne(id);
-  }  
-  
-  //Forgot Password
   @Patch('email/:email')
   async change(
     @Param('email') email: string,
@@ -185,33 +107,26 @@ export class ProfileController {
     }
     return this.profileService.change(email, updateProfileDto);
   }
-
-
-  // @Patch(':id')
-  // @UseGuards(AuthGuard)
-  // @UseInterceptors(FileInterceptor('file'))
-  // async update(
-  //   @Param('id') id: string,
-  //   @Body() updateProfileDto: UpdateProfileDto,
-  //   @UploadedFile() file: multer.File,
-  // ) {
-  //   if (updateProfileDto.password) {
-  //     updateProfileDto.password = await bcrypt.hash(updateProfileDto.password, 12);
-  //   }
   
-  //   let profileData = { ...updateProfileDto };
-  //   if (file) {
-  //     // Save the file to the wanted directory
-  //     const filePath = './uploads/' + file.originalname;
-  //     createWriteStream(filePath, { flags: 'w' }).write(file.buffer);
+  @Post('logout')
+  @HttpCode(200) // Ensure the response code is 200 OK
+  async logout(@Res({ passthrough: true }) response: ExpressResponse) {
+    response.clearCookie('jwt');
+    response.setHeader('Cache-Control', 'no-store');
+    return { message: 'Logout successful' };
+  }
   
-  //     // Update the createProfileDto object with the file name
-  //     profileData = { ...updateProfileDto, cv: file.originalname };
-  //   }
   
+  @UseGuards(AuthGuard)
+  findAll() {
+    return this.profileService.findAll();
+  }
 
-  //   return this.profileService.update(id, profileData);
-  // }
+  @Get(':id')
+  @UseGuards(AuthGuard)
+  findOne(@Param('id') id: string) {
+    return this.profileService.findOne(id);
+  }  
   
   @Delete(':id')
   @UseGuards(AuthGuard)

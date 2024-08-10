@@ -1,11 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import {v4 as uuidv4} from "uuid";
-
 
 @Entity({name: 'profile'})
 export class Profile {
-    @PrimaryGeneratedColumn('uuid')
-    id: uuidv4;
+    @PrimaryGeneratedColumn()
+    id: string;
 
     @Column({ type: 'varchar', unique: true, nullable: false })
     email: string;
@@ -22,9 +20,13 @@ export class Profile {
     @Column({ type: 'text', nullable: false})
     role: string;
 
+    @Column({ type: 'text', default: 0 })
+    uploads: number;
+
     @Column({ type: 'text', default: 'Active'})
     status: string;
 
-    @Column({ type: 'text', default:0})
-    rentIncome: string;
+    @Column({ type: 'text', default: false})
+    isApproved: boolean;
+
 }

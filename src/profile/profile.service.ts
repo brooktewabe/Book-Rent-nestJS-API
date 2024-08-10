@@ -67,13 +67,6 @@ export class ProfileService {
       throw new NotFoundException('Profile not found');
     }
 
-
-      // const filePath = join(__dirname, '..', './uploads/', profile.cv);
-      // unlink(filePath, (err) => {
-      //   if (err) {
-      //     console.error('Error deleting file:', err);
-      //   }
-      // });
     await this.profileRepository.remove(profile);
   }
 }

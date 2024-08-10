@@ -5,5 +5,6 @@ export class CreateProfileDto {
     location: string;
     phoneNo: string;
     status: string;
-    rentIncome: string;
+    uploads: number;
+    isApproved: boolean;
 }
