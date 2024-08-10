@@ -5,10 +5,10 @@ export const config: TypeOrmModuleOptions = {
   // password: 'postgres',
   password: '1234',
   port: 5432,
+  database: 'bookdb',
   // host: 'db',
-  database: 'capstone',
   host: '127.0.0.1',
-  // database: 'capstoneProject',
+  // database: 'bookdb',
   synchronize: true,
   entities: ['dist/**/*.entity{.ts,.js}'],
 };

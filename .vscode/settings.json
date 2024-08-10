@@ -6,7 +6,7 @@
             "port": 5432,
             "driver": "PostgreSQL",
             "name": "Local PostgreSQL",
-            "database": "capstoneProject",
+            "database": "capstone",
             "username": "postgres",
             "password": "1234"
         }

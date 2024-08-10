@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BooksModule } from './books/books.module';
 import { ConfigModule } from '@nestjs/config';
 import {config} from './orm.config'
-import { ApplicationModule } from './application/application.module';
+import { EarningsModule } from './Earning/earning.module';
 import { ProfileModule } from './profile/profile.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -24,7 +24,7 @@ import { diskStorage } from 'multer';
     }),
     TypeOrmModule.forRoot(config),
     BooksModule,
-    ApplicationModule,
+    EarningsModule,
     ProfileModule
   ],
   controllers: [AppController],
